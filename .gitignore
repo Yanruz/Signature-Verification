@@ -1,4 +1,4 @@
 *.pt
- __pycache__
- signatures
- .pkl
+__pycache__
+signatures
+*.pkl
