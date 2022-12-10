@@ -8,29 +8,43 @@ from sklearn.model_selection import train_test_split
 from models import *
 import pickle
 
-def dataset_gen():
+def dataset_gen(disjoint_user=False):
     base_path_org = 'signatures/full_org/original_%d_%d.png'
     base_path_forg = 'signatures/full_forg/forgeries_%d_%d.png'
     assert os.path.exists('signatures')
     data = []
-    n_samples_of_each_class = 13500
+    
+    def gen_pairs(n_samples_of_each_class=13500, user_low=1, user_high=55):
+        data = []
+        for _ in range(n_samples_of_each_class):
+            anchor_person = randrange(user_low, user_high+1)
+            anchor_sign = randrange(1, 24)
+            pos_sign = randrange(1, 25)
+            anchor_sign, pos_sign = fix_pair(anchor_sign, pos_sign)
+            neg_sign = randrange(1, 25)
+            positive = (base_path_org % (anchor_person, anchor_sign), base_path_org % (anchor_person, pos_sign), 1)
+            negative = (base_path_org % (anchor_person, anchor_sign), base_path_forg % (anchor_person, neg_sign), 0)
+            data.append(positive)
+            data.append(negative)
+        return list(set(data))
+    
+    train_file_name = 'train_index.pkl'
+    test_file_name = 'test_index.pkl'
+    
+    if disjoint_user:
+        train_file_name = 'disjoint_user_' + train_file_name
+        test_file_name = 'disjoint_user_' + test_file_name
+        train = gen_pairs(n_samples_of_each_class=int(13500*0.65), user_low=1, user_high=35)
+        test = gen_pairs(n_samples_of_each_class=int(13500*0.35), user_low=36, user_high=55)
+    else:
+        data = gen_pairs()
+        train, test = train_test_split(data, test_size=0.35)
 
-    for _ in range(n_samples_of_each_class):
-        anchor_person = randrange(1, 55)
-        anchor_sign = randrange(1, 24)
-        pos_sign = randrange(1, 24)
-        anchor_sign, pos_sign = fix_pair(anchor_sign, pos_sign)
-        neg_sign = randrange(1, 24)
-        positive = [base_path_org % (anchor_person, anchor_sign), base_path_org % (anchor_person, pos_sign), 1]
-        negative = [base_path_org % (anchor_person, anchor_sign), base_path_forg % (anchor_person, neg_sign), 0]
-        data.append(positive)
-        data.append(negative)
-    train, test = train_test_split(data, test_size=0.15)
 
-    with open('train_index.pkl', 'wb') as train_index_file:
+    with open(train_file_name, 'wb') as train_index_file:
         pickle.dump(train, train_index_file)
 
-    with open('test_index.pkl', 'wb') as test_index_file:
+    with open(test_file_name, 'wb') as test_index_file:
         pickle.dump(test, test_index_file)
     
 def fix_pair(x, y):
@@ -78,45 +92,53 @@ def compute_accuracy_roc(predictions, labels):
     return max_accuracy, optimal_dist
 
 def get_model(model_name):
-	if model_name == 'SiameseConvNet':
-		return SiameseConvNet()
-	elif model_name == 'TransformerNet':
-		return TransformerNet()
+    if model_name == 'SiameseConvNet':
+        return SiameseConvNet()
+    elif model_name == 'TransformerNet':
+        return TransformerNet()
+    elif 'vit' in model_name:
+        return vit_base()
 
 def get_transform(model_name):
-	if model_name == 'SiameseConvNet':
-		image_size = (220, 155)
-	elif model_name == 'TransformerNet':
-		image_size = (224, 224)
-	transform =  transforms.Compose([transforms.Resize(image_size),
-                    transforms.Grayscale(num_output_channels=1),
+    num_output_channels = 1
+    if model_name == 'SiameseConvNet':
+        image_size = (220, 155)
+    elif model_name == 'TransformerNet':
+        image_size = (224, 224)
+    elif 'vit' in model_name:
+        image_size = (224, 224)
+        num_output_channels = 3
+
+    transform =  transforms.Compose([transforms.Resize(image_size),
+                    # transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+                    transforms.Grayscale(num_output_channels=num_output_channels),
                     transforms.ToTensor()])
                     # transforms.GaussianBlur(kernel_size=(5, 9), sigma=(0.1, 5))
                     # transforms.RandomRotation(degrees=(0, 90))
-	return transform
+    return transform
 
 def train(epochs, train_loader, model, optimizer, criterion, test_loader=None):
-	for epoch in range(1, epochs+1):
-		total_loss = 0
-		for batch_index, data in enumerate(train_loader):
-			A = data[0].cuda()
-			B = data[1].cuda()
-			optimizer.zero_grad()
-			label = data[2].float().cuda()
+    for epoch in range(1, epochs+1):
+        total_loss = 0
+        for batch_index, data in enumerate(train_loader):
+            A = data[0].cuda()
+            B = data[1].cuda()
+            optimizer.zero_grad()
+            label = data[2].float().cuda()
 
-			f_A, f_B = model(A, B)
+            f_A, f_B = model(A, B)
 
-			loss = criterion(f_A, f_B, label)
-			total_loss += loss.item()
+            loss = criterion(f_A, f_B, label)
+            total_loss += loss.item()
 
-			if batch_index%10 == 0:
-				print('Epoch {}, batch {}, loss={}'.format(epoch, batch_index, loss.item()) ,flush=False)
-			loss.backward()
-			optimizer.step()
-		print('Average epoch loss={}'.format(total_loss / len(train_loader)),flush=False)
-		if test_loader:
-			avg_accuracy, avg_dist, n_batch = test(test_loader, model)
-			print('Average accuracy across all batches={} at d={}'.format(avg_accuracy / n_batch, avg_dist / n_batch),flush=False)
+            if batch_index%100 == 0:
+                print('Epoch {}, batch {}, loss={}'.format(epoch, batch_index, loss.item()) ,flush=False)
+            loss.backward()
+            optimizer.step()
+        print('Average epoch loss={}'.format(total_loss / len(train_loader)),flush=False)
+        if test_loader:
+            avg_accuracy, avg_dist, n_batch = test(test_loader, model)
+            print('Average accuracy across all batches={} at d={}'.format(avg_accuracy / n_batch, avg_dist / n_batch),flush=False)
 
 
 
@@ -131,7 +153,7 @@ def test(test_loader, model):
         dist = pairwise_distance(f_a, f_b)
 
         accuracy, dist = compute_accuracy_roc(dist.detach().cpu().numpy(), labels.detach().numpy())
-        if batch_index%10 == 50:
+        if batch_index%100 == 0:
             print('Max accuracy for batch {} = {} at d = {}'.format(batch_index, accuracy, dist),flush=False)
         avg_accuracy += accuracy
         avg_dist += dist

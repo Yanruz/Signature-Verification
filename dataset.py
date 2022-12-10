@@ -4,12 +4,18 @@ from PIL import Image
 
 class GetDataset(Dataset):
 
-    def __init__(self, dataset, transform = None):
+    def __init__(self, dataset, transform = None, disjoint_user=False):
+        self.train_file_name = 'train_index.pkl'
+        self.test_file_name = 'test_index.pkl'
+        if disjoint_user:
+            self.train_file_name = 'disjoint_user_' + self.train_file_name
+            self.test_file_name = 'disjoint_user_' + self.test_file_name
+            
         if dataset == "train":
-            with open('train_index.pkl', 'rb') as train_index_file:
+            with open(self.train_file_name, 'rb') as train_index_file:
                 self.pairs = pickle.load(train_index_file)
         else:
-            with open('test_index.pkl', 'rb') as test_index_file:
+            with open(self.train_file_name, 'rb') as test_index_file:
                 self.pairs = pickle.load(test_index_file)
         self.transform = transform
 

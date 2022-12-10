@@ -21,38 +21,38 @@ from utils import *
 Datasets can be downloaded from this Link: https://cedar.buffalo.edu/NIJ/data/
 """
 parser = argparse.ArgumentParser(description='arguments')
-parser.add_argument('--model_name', type=str, help='name of the model to use: SiameseConvNet, TransformerNet')
+parser.add_argument('--model_name', type=str, default='SiameseConvNet', help='name of the model to use: SiameseConvNet, TransformerNet')
 parser.add_argument('--epochs', type=int, default=20, help='number of epochs')
 parser.add_argument('--batch_size', default=64, type=int)
 parser.add_argument('--lr', type=float, default=0.001, help='learing rate')
 parser.add_argument('--weight_decay', type=float, default=0.0001, help='weight_decay')
+parser.add_argument('--disjoint_user', type=bool, default=True)
 
 def main(args):
     #args
     epochs = args.epochs
-    batch_size=args.batch_size
-    lr = args.lr
-    weight_decay = args.weight_decay
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     
     # Preprocessing and Loading Dataset
-    if not (os.path.exists('test_index.pkl') and os.path.exists('train_index.pkl')):
+    if not (os.path.exists('test_index.pkl') and os.path.exists('train_index.pkl')) and args.disjoint_user == False:
         dataset_gen()
+    elif not (os.path.exists('disjoint_user_test_index.pkl') and os.path.exists('disjoint_user_train_index.pkl'))and args.disjoint_user: 
+        dataset_gen(args.disjoint_user)
 
     # Model, Criterion, Optimizer
     model = get_model(args.model_name).to(device)
     criterion = ContrastiveLoss()
-    optimizer = Adam(model.parameters())
+    optimizer = Adam(model.parameters(), lr = args.lr, weight_decay=args.weight_decay)
 
     # Train Dataset
     transform = get_transform(args.model_name)
     print(transform, flush=False)
-    train_dataset = GetDataset("train", transform=transform)
-    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+    train_dataset = GetDataset("train", transform=transform, disjoint_user=args.disjoint_user)
+    train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True)
         
     # Test Dataset
-    test_dataset = GetDataset("test", transform=transform)
-    test_loader = DataLoader(test_dataset, batch_size=batch_size)
+    test_dataset = GetDataset("test", transform=transform, disjoint_user=args.disjoint_user)
+    test_loader = DataLoader(test_dataset, batch_size=args.batch_size)
 
     # Define train function
     train(epochs, train_loader, model, optimizer, criterion, test_loader)

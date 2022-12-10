@@ -1,7 +1,17 @@
 from transformers import ViTConfig, ViTModel
+from transformers import ViTFeatureExtractor, ViTForImageClassification
 import torch.nn as nn 
 import torch.nn.functional as F
 import torch
+class vit_base(nn.Module):
+    def __init__(self):
+        super(vit_base, self).__init__()
+        self.vit = ViTForImageClassification.from_pretrained('google/vit-base-patch16-224')
+        self.vit.classifier = nn.Linear(768, 128)
+    def forward(self, input1, input2):
+        output1, output2 = self.vit(input1).logits, self.vit(input2).logits
+        return output1, output2
+        
 class TransformerNet(nn.Module):
     def __init__(self):
         super(TransformerNet, self).__init__()
