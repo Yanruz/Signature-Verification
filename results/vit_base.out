@@ -1,0 +1,15 @@
+Namespace(batch_size=64, disjoint_user=True, epochs=10, lr=0.001, model_name='vit', weight_decay=0.0001)
+Compose(
+    Resize(size=(224, 224), interpolation=bilinear, max_size=None, antialias=None)
+    Grayscale(num_output_channels=3)
+    ToTensor()
+)
+Epoch 1, batch 0, loss=2.6469411849975586
+Epoch 1, batch 100, loss=0.1568901240825653
+Epoch 1, batch 200, loss=0.1741875410079956
+Average epoch loss=0.16364337929171513
+Max accuracy for batch 0 = 1.0 at d = 0.7827837592214346
+Max accuracy for batch 100 = 1.0 at d = 0.591604451496154
+Max accuracy for batch 200 = 1.0 at d = 0.685897316986695
+Average accuracy across all batches=0.9998790829395573 at d=0.7257733982121234
+Epoch 2, batch 0, loss=0.04227979853749275
