@@ -91,6 +91,8 @@ def get_transform(model_name):
 	transform =  transforms.Compose([transforms.Resize(image_size),
                     transforms.Grayscale(num_output_channels=1),
                     transforms.ToTensor()])
+                    # transforms.GaussianBlur(kernel_size=(5, 9), sigma=(0.1, 5))
+                    # transforms.RandomRotation(degrees=(0, 90))
 	return transform
 
 def train(epochs, train_loader, model, optimizer, criterion, test_loader=None):
