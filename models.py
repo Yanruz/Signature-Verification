@@ -102,5 +102,57 @@ class ContrastiveLoss(nn.Module):
 
         return loss_contrastive
 
+class BCEWithLogitsLoss(nn.Module):
+
+    def __init__(self, margin=0):
+        super(L2_CrossEntropyLoss, self).__init__()
+        self.loss = nn.BCEWithLogitsLoss()
+        self.shift = 1
+        self.margin = margin
+        
+
+    def forward(self, output1, output2, label):
+        euclidean_distance = -1*F.pairwise_distance(output1, output2) + self.shift + self.margin
+        loss = self.loss(euclidean_distance, label)
+        return loss
 
 
+class CLIPModel(nn.Module):
+    def __init__(self, model, temperature=1):
+        super().__init__()
+        self.image_encoder = model
+        self.temperature = temperature
+
+    def forward(self, input1, input2):
+        # Getting Image Features
+        img1_feat, img2_feat = self.image_encoder(input1, input2)
+        logits = (img1_feat @ img2_feat.T) / self.temperature
+        targets = F.softmax(
+            (img1_feat @ img1_feat.T + img2_feat @ img2_feat.T) / 2 * self.temperature, dim=-1
+        )
+        # targets = torch.arange(len(input1))
+        return logits, targets
+    def forward_features(self, input1, input2):
+        img1_feat, img2_feat = self.image_encoder(input1, input2)
+        return img1_feat, img2_feat
+        
+def cross_entropy(preds, targets, reduction='none'):
+    log_softmax = nn.LogSoftmax(dim=-1)
+    loss = (-targets * log_softmax(preds)).sum(1)
+    if reduction == "none":
+        return loss
+    elif reduction == "mean":
+        return loss.mean()
+
+class CLIPLoss(nn.Module):
+
+    def __init__(self):
+        super(CLIPLoss, self).__init__()
+        self.loss = torch.nn.CrossEntropyLoss()
+
+    def forward(self, logits, label):
+        img1_loss = cross_entropy(logits, label, reduction='none')
+        img2_loss = cross_entropy(logits.T, label.T, reduction='none')
+        loss =  (img1_loss + img1_loss) / 2.0
+        return loss.mean()
+        # return self.loss(logits, label)

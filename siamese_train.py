@@ -13,20 +13,22 @@ import matplotlib.pyplot as plt
 import argparse
 import os
 
-from models import ContrastiveLoss
-from dataset import GetDataset
+from models import ContrastiveLoss, CLIPModel, BCEWithLogitsLoss
+from dataset import GetDataset, CLIPDataset
 from utils import *
 
 """
 Datasets can be downloaded from this Link: https://cedar.buffalo.edu/NIJ/data/
 """
 parser = argparse.ArgumentParser(description='arguments')
-parser.add_argument('--model_name', type=str, default='SiameseConvNet', help='name of the model to use: SiameseConvNet, TransformerNet')
+parser.add_argument('--model_name', type=str, default='SiameseConvNet', help='name of the model to use: SiameseConvNet, TransformerNet, vit_base')
 parser.add_argument('--epochs', type=int, default=20, help='number of epochs')
 parser.add_argument('--batch_size', default=64, type=int)
 parser.add_argument('--lr', type=float, default=0.001, help='learing rate')
 parser.add_argument('--weight_decay', type=float, default=0.0001, help='weight_decay')
 parser.add_argument('--disjoint_user', type=bool, default=True)
+parser.add_argument('--clip', type=bool, default=False)
+parser.add_argument('--loss', type=str, default='contrastive')
 
 def main(args):
     #args
@@ -34,15 +36,13 @@ def main(args):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     
     # Preprocessing and Loading Dataset
-    if not (os.path.exists('test_index.pkl') and os.path.exists('train_index.pkl')) and args.disjoint_user == False:
+    if args.clip:
+        print("Clip Training")
+        dataset_gen(args.disjoint_user, args.clip)
+    elif not (os.path.exists('test_index.pkl') and os.path.exists('train_index.pkl')) and args.disjoint_user == False:
         dataset_gen()
     elif not (os.path.exists('disjoint_user_test_index.pkl') and os.path.exists('disjoint_user_train_index.pkl'))and args.disjoint_user: 
         dataset_gen(args.disjoint_user)
-
-    # Model, Criterion, Optimizer
-    model = get_model(args.model_name).to(device)
-    criterion = ContrastiveLoss()
-    optimizer = Adam(model.parameters(), lr = args.lr, weight_decay=args.weight_decay)
 
     # Train Dataset
     transform = get_transform(args.model_name)
@@ -54,8 +54,26 @@ def main(args):
     test_dataset = GetDataset("test", transform=transform, disjoint_user=args.disjoint_user)
     test_loader = DataLoader(test_dataset, batch_size=args.batch_size)
 
+
+    # Model, Criterion, Optimizer
+    model = get_model(args.model_name).to(device)
+    if args.loss == 'contrastive':
+        criterion = ContrastiveLoss()
+    elif args.loss == 'BCE':
+        criterion = BCEWithLogitsLoss()
+    optimizer = Adam(model.parameters(), lr = args.lr, weight_decay=args.weight_decay)
+
+    if args.clip:
+        clip_model = CLIPModel(model).to(device)
+        criterion = CLIPLoss()
+        train_dataset = CLIPDataset("train", transform)
+        train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True)
+
     # Define train function
-    train(epochs, train_loader, model, optimizer, criterion, test_loader)
+    if args.clip:
+        train(epochs, train_loader, clip_model, optimizer, criterion, test_loader, args.clip) 
+    else:
+        train(epochs, train_loader, model, optimizer, criterion, test_loader)
 
     # Save model
     torch.save(model.state_dict(), "./{}_model.pt".format(args.model_name))
