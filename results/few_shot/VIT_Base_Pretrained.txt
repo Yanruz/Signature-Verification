@@ -1,0 +1,9 @@
+Namespace(batch_size=32, clip=False, disjoint_user=True, epochs=1, fs=True, loss='BCE', lr=0.001, model_name='vit', weight_decay=0.0001)
+Epoch 1, batch 0, loss=0.5025794506072998
+Average epoch loss=0.0011344908591586903
+Average accuracy across all batches=0.9419391357849402 at d=0.35017678537964847
+
+Namespace(batch_size=32, clip=False, disjoint_user=True, epochs=1, fs=True, loss='contrastive', lr=0.001, model_name='vit', weight_decay=0.0001)
+Epoch 1, batch 0, loss=2.3258771896362305
+Average epoch loss=0.0052502871097883305
+Average accuracy across all batches=0.9238385058201375 at d=0.24847255682945268

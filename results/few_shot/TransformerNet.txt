@@ -1,0 +1,7 @@
+Namespace(batch_size=32, clip=False, disjoint_user=True, epochs=1, fs=True, loss='BCE', lr=0.001, model_name='TransformerNet', weight_decay=0.0001)
+Average epoch loss=0.001759944328066996
+accuracy across all batches=0.506919549334788 at d=1.452537014484406
+
+Namespace(batch_size=32, clip=False, disjoint_user=True, epochs=1, fs=True, loss='contrastive', lr=0.001, model_name='TransformerNet', weight_decay=0.0001)
+Average epoch loss=0.00275989364555135
+accuracy across all batches=0.5120883993314252 at d=1.490766328334809

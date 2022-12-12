@@ -1,0 +1,9 @@
+Namespace(batch_size=32, clip=False, disjoint_user=True, epochs=1, fs=True, loss='BCE', lr=0.001, model_name='SiameseConvNet', weight_decay=0.0001)
+Average epoch loss=0.0015993895972017242
+accuracy across all batches=0.5866739701731967 at d=14.799003112790468
+
+Namespace(batch_size=32, clip=False, disjoint_user=True, epochs=1, fs=True, loss='contrastive', lr=0.001, model_name='SiameseConvNet', weight_decay=0.0001)
+Epoch 1, batch 0, loss=1.8699190616607666
+Average epoch loss=0.004221036256570579
+accuracy across all batches=0.6078156487342166 at d=24.047922073359764
+

@@ -125,7 +125,7 @@ def get_transform(model_name):
                     # transforms.RandomRotation(degrees=(0, 90))
     return transform
 
-def train(epochs, train_loader, model, optimizer, criterion, test_loader=None, clip=False):
+def train(epochs, train_loader, model, optimizer, criterion, test_loader, clip=False, few_shot=False):
     for epoch in range(1, epochs+1):
         total_loss = 0
         for batch_index, data in enumerate(train_loader):
@@ -143,19 +143,23 @@ def train(epochs, train_loader, model, optimizer, criterion, test_loader=None, c
                 loss = criterion(f_A, f_B, label)
                 total_loss += loss.item()
 
-            if batch_index%100 == 0:
-                print('Epoch {}, batch {}, loss={}'.format(epoch, batch_index, loss.item()) ,flush=False)
+            # if batch_index%100 == 0:
+            #     print('Epoch {}, batch {}, loss={}'.format(epoch, batch_index, loss.item()) ,flush=False)
             loss.backward()
             optimizer.step()
+            if few_shot:
+                break
         print('Average epoch loss={}'.format(total_loss / len(train_loader)),flush=False)
         if test_loader:
-            avg_accuracy, avg_dist, n_batch = test(test_loader, model, clip)
-            print('Average accuracy across all batches={} at d={}'.format(avg_accuracy / n_batch, avg_dist / n_batch),flush=False)
+            accuracy, dist = test(test_loader, model, clip)
+            print('accuracy across all batches={} at d={}'.format(accuracy, dist),flush=False)
+    return model
 
 
 
 def test(test_loader, model, clip=False):
-    avg_accuracy, avg_dist, n_batch = 0,0,0
+    preds = []
+    targets = []
     for batch_index, data in enumerate(test_loader):
         A = data[0]
         B = data[1]
@@ -170,11 +174,7 @@ def test(test_loader, model, clip=False):
         else:
             f_a, f_b = model.forward(A.cuda(), B.cuda())
             dist = pairwise_distance(f_a, f_b)
-
-        accuracy, dist = compute_accuracy_roc(dist.detach().cpu().numpy(), labels.detach().numpy())
-        if batch_index%50 == 0:
-            print('Max accuracy for batch {} = {} at d = {}'.format(batch_index, accuracy, dist),flush=False)
-        avg_accuracy += accuracy
-        avg_dist += dist
-        n_batch += 1
-    return avg_accuracy, avg_dist, n_batch
+        preds.append(dist.detach().cpu().numpy())
+        targets.append(labels.detach().numpy())
+    avg_accuracy, avg_dist = compute_accuracy_roc(np.concatenate(preds, axis=0), np.concatenate(targets, axis=0))
+    return avg_accuracy, avg_dist

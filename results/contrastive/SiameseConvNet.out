@@ -1,86 +1,31 @@
-Namespace(batch_size=64, disjoint_user=True, epochs=10, lr=0.001, model_name='SiameseConvNet', weight_decay=0.0001)
-Compose(
-    Resize(size=(220, 155), interpolation=bilinear, max_size=None, antialias=None)
-    Grayscale(num_output_channels=1)
-    ToTensor()
-)
-Epoch 1, batch 0, loss=1.8097331523895264
-Epoch 1, batch 100, loss=0.11275260150432587
-Epoch 1, batch 200, loss=0.20813429355621338
-Average epoch loss=1.3537187458836732
-Max accuracy for batch 0 = 1.0 at d = 0.2781893101334574
-Max accuracy for batch 100 = 0.9827586206896552 at d = 0.25574389377236384
-Max accuracy for batch 200 = 1.0 at d = 0.17971171367168437
-Average accuracy across all batches=0.9961809085088853 at d=0.172442901231791
-Epoch 2, batch 0, loss=0.28458160161972046
-Epoch 2, batch 100, loss=0.13932114839553833
-Epoch 2, batch 200, loss=0.10362596809864044
-Average epoch loss=0.12292826541627175
-Max accuracy for batch 0 = 1.0 at d = 0.9593109582960614
-Max accuracy for batch 100 = 1.0 at d = 0.6827868775576359
-Max accuracy for batch 200 = 1.0 at d = 0.36753135934472114
-Average accuracy across all batches=0.9983220199339422 at d=0.5190599954384787
-Epoch 3, batch 0, loss=0.0767449215054512
-Epoch 3, batch 100, loss=0.0842461884021759
-Epoch 3, batch 200, loss=0.2357977032661438
-Average epoch loss=0.09200632075043437
-Max accuracy for batch 0 = 1.0 at d = 0.7113928953409201
-Max accuracy for batch 100 = 1.0 at d = 0.7107377922534949
-Max accuracy for batch 200 = 1.0 at d = 0.5009405106604103
-Average accuracy across all batches=0.9997333352691934 at d=0.49860910073885567
-Epoch 4, batch 0, loss=0.07607129961252213
-Epoch 4, batch 100, loss=0.04441959783434868
-Epoch 4, batch 200, loss=0.0487641915678978
-Average epoch loss=0.09755634888156092
-Max accuracy for batch 0 = 1.0 at d = 1.372139550060035
-Max accuracy for batch 100 = 1.0 at d = 1.400426462173463
-Max accuracy for batch 200 = 1.0 at d = 1.215421691596509
-Average accuracy across all batches=0.9986514772452031 at d=1.3829351478032612
-Epoch 5, batch 0, loss=0.18859948217868805
-Epoch 5, batch 100, loss=0.026914799585938454
-Epoch 5, batch 200, loss=0.07893915474414825
-Average epoch loss=0.08007355220828495
-Max accuracy for batch 0 = 1.0 at d = 0.5006683544814591
-Max accuracy for batch 100 = 1.0 at d = 0.597387234166265
-Max accuracy for batch 200 = 1.0 at d = 0.3557464222162965
-Average accuracy across all batches=1.0 at d=0.3939797842057944
-Epoch 6, batch 0, loss=0.03175971657037735
-Epoch 6, batch 100, loss=0.010869467630982399
-Epoch 6, batch 200, loss=0.05243101716041565
-Average epoch loss=0.07521773541567328
-Max accuracy for batch 0 = 1.0 at d = 0.4799247235953812
-Max accuracy for batch 100 = 1.0 at d = 0.2919106189310553
-Max accuracy for batch 200 = 1.0 at d = 0.2127291118353607
-Average accuracy across all batches=0.9987488041822147 at d=0.2564061264399798
-Epoch 7, batch 0, loss=0.15487870573997498
-Epoch 7, batch 100, loss=0.07736510038375854
-Epoch 7, batch 200, loss=0.04156627506017685
-Average epoch loss=0.07461897366080586
-Max accuracy for batch 0 = 1.0 at d = 0.6396319469511514
-Max accuracy for batch 100 = 1.0 at d = 0.5616558456718926
-Max accuracy for batch 200 = 1.0 at d = 0.5689545645415788
-Average accuracy across all batches=1.0 at d=0.5844625284878632
-Epoch 8, batch 0, loss=0.027342965826392174
-Epoch 8, batch 100, loss=0.03774804249405861
-Epoch 8, batch 200, loss=0.0949215218424797
-Average epoch loss=0.06623733460214244
-Max accuracy for batch 0 = 1.0 at d = 0.3746387688368562
-Max accuracy for batch 100 = 1.0 at d = 0.5573917251676326
-Max accuracy for batch 200 = 1.0 at d = 0.27316175571084045
-Average accuracy across all batches=0.9996529673806064 at d=0.33563343941127777
-Epoch 9, batch 0, loss=0.10388573259115219
-Epoch 9, batch 100, loss=0.02609996125102043
-Epoch 9, batch 200, loss=0.015264732763171196
-Average epoch loss=0.03939697096872752
-Max accuracy for batch 0 = 1.0 at d = 0.6018055517822509
-Max accuracy for batch 100 = 1.0 at d = 0.8374462873041637
-Max accuracy for batch 200 = 1.0 at d = 0.38905443886667523
-Average accuracy across all batches=1.0 at d=0.4489283644575711
-Epoch 10, batch 0, loss=0.031157927587628365
-Epoch 10, batch 100, loss=0.02158990502357483
-Epoch 10, batch 200, loss=0.016454659402370453
-Average epoch loss=0.03988498237439044
-Max accuracy for batch 0 = 1.0 at d = 0.9599253526777037
-Max accuracy for batch 100 = 1.0 at d = 1.1407301579266798
-Max accuracy for batch 200 = 1.0 at d = 0.6364832101315265
-Average accuracy across all batches=1.0 at d=0.9694715785654994
+Namespace(batch_size=32, clip=False, disjoint_user=True, epochs=15, fs=False, loss='contrastive', lr=0.001, model_name='SiameseConvNet', weight_decay=0.0001)
+Average epoch loss=1.6716302535990695
+accuracy across all batches=0.9626346229054106 at d=1.572730976223947
+Average epoch loss=0.14764633104961963
+accuracy across all batches=0.9964104311609636 at d=0.499173063218594
+Average epoch loss=0.12329246908947657
+accuracy across all batches=0.9955658747892022 at d=0.974078447639943
+Average epoch loss=0.07037808073360818
+accuracy across all batches=0.9985924060470643 at d=0.7939483268707997
+Average epoch loss=0.06577484688193917
+accuracy across all batches=0.9995079548936234 at d=0.9018847470134504
+Average epoch loss=0.08569103524059428
+accuracy across all batches=0.992036676954348 at d=1.0125834114551553
+Average epoch loss=0.05823188528637181
+accuracy across all batches=0.9898832983352888 at d=0.5330978060066704
+Average epoch loss=0.0380262512183889
+accuracy across all batches=0.9977437644942969 at d=0.9578914716616281
+Average epoch loss=0.049331502688304434
+accuracy across all batches=0.9928902207243225 at d=0.5009581684321169
+Average epoch loss=0.05481328067851188
+accuracy across all batches=0.9983068020754713 at d=1.1135029987171303
+Average epoch loss=0.0481540086985572
+accuracy across all batches=0.9985165113550596 at d=0.6642907462492591
+Average epoch loss=0.03114013835781466
+accuracy across all batches=0.9983035339306665 at d=0.8947756126672037
+Average epoch loss=0.038520719921195344
+accuracy across all batches=0.9984496040612678 at d=0.7739009260945022
+Average epoch loss=0.017426572126729527
+accuracy across all batches=0.9995087719298246 at d=0.7279698866419494
+Average epoch loss=0.09582745238931525
+accuracy across all batches=0.9984471529526642 at d=0.6346064588502055

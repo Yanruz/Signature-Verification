@@ -29,6 +29,8 @@ parser.add_argument('--weight_decay', type=float, default=0.0001, help='weight_d
 parser.add_argument('--disjoint_user', type=bool, default=True)
 parser.add_argument('--clip', type=bool, default=False)
 parser.add_argument('--loss', type=str, default='contrastive')
+parser.add_argument('--fs', type=bool, default=False, help='enable few shot training')
+
 
 def main(args):
     #args
@@ -46,7 +48,6 @@ def main(args):
 
     # Train Dataset
     transform = get_transform(args.model_name)
-    print(transform, flush=False)
     train_dataset = GetDataset("train", transform=transform, disjoint_user=args.disjoint_user)
     train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True)
         
@@ -71,9 +72,9 @@ def main(args):
 
     # Define train function
     if args.clip:
-        train(epochs, train_loader, clip_model, optimizer, criterion, test_loader, args.clip) 
+        model = train(epochs, train_loader, clip_model, optimizer, criterion, test_loader, args.clip) 
     else:
-        train(epochs, train_loader, model, optimizer, criterion, test_loader)
+        model = train(epochs, train_loader, model, optimizer, criterion, test_loader, few_shot=args.fs)
 
     # Save model
     torch.save(model.state_dict(), "./{}_model.pt".format(args.model_name))
