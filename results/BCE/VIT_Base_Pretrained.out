@@ -1,0 +1,166 @@
+Namespace(batch_size=32, clip=False, disjoint_user=True, epochs=10, loss='BCE', lr=0.001, model_name='vit_base', weight_decay=0.0001)
+Compose(
+    Resize(size=(224, 224), interpolation=bilinear, max_size=None, antialias=None)
+    Grayscale(num_output_channels=3)
+    ToTensor()
+)
+Epoch 1, batch 0, loss=0.6910834312438965
+Epoch 1, batch 100, loss=0.4056958556175232
+Epoch 1, batch 200, loss=0.3006345331668854
+Epoch 1, batch 300, loss=0.2698028087615967
+Epoch 1, batch 400, loss=0.2077139914035797
+Average epoch loss=0.3220431372422397
+Max accuracy for batch 0 = 1.0 at d = 1.3767739308029425
+Max accuracy for batch 50 = 1.0 at d = 1.2548480520248424
+Max accuracy for batch 100 = 1.0 at d = 0.7497993957400328
+Max accuracy for batch 150 = 1.0 at d = 1.1894749321341525
+Max accuracy for batch 200 = 1.0 at d = 1.2623693153858193
+Max accuracy for batch 250 = 1.0 at d = 0.8497366074472673
+Max accuracy for batch 300 = 1.0 at d = 1.3760002470612538
+Max accuracy for batch 350 = 1.0 at d = 1.0276574389562012
+Max accuracy for batch 400 = 1.0 at d = 1.3890352694392216
+Average accuracy across all batches=1.0 at d=1.1243245304453053
+Epoch 2, batch 0, loss=0.25458741188049316
+Epoch 2, batch 100, loss=0.258945107460022
+Epoch 2, batch 200, loss=0.28703662753105164
+Epoch 2, batch 300, loss=0.3067702054977417
+Epoch 2, batch 400, loss=0.22495809197425842
+Average epoch loss=0.2589659379378937
+Max accuracy for batch 0 = 1.0 at d = 1.0828427565842875
+Max accuracy for batch 50 = 1.0 at d = 1.1613186742514383
+Max accuracy for batch 100 = 1.0 at d = 0.6718724609874189
+Max accuracy for batch 150 = 1.0 at d = 1.1712402011156091
+Max accuracy for batch 200 = 1.0 at d = 0.9355427986085423
+Max accuracy for batch 250 = 1.0 at d = 0.5820779358930885
+Max accuracy for batch 300 = 1.0 at d = 0.9824340894818314
+Max accuracy for batch 350 = 1.0 at d = 0.9824964629411705
+Max accuracy for batch 400 = 1.0 at d = 0.7988823082447059
+Average accuracy across all batches=1.0 at d=0.9417875093655177
+Epoch 3, batch 0, loss=0.2624276876449585
+Epoch 3, batch 100, loss=0.2682473659515381
+Epoch 3, batch 200, loss=0.2928917109966278
+Epoch 3, batch 300, loss=0.204902783036232
+Epoch 3, batch 400, loss=0.2784276008605957
+Average epoch loss=0.24851385757966182
+Max accuracy for batch 0 = 1.0 at d = 1.2170380972623835
+Max accuracy for batch 50 = 1.0 at d = 1.561556297361852
+Max accuracy for batch 100 = 1.0 at d = 0.9918753684386611
+Max accuracy for batch 150 = 1.0 at d = 1.2536589079201232
+Max accuracy for batch 200 = 1.0 at d = 1.179828997015954
+Max accuracy for batch 250 = 1.0 at d = 0.9338731315135963
+Max accuracy for batch 300 = 1.0 at d = 1.1405895592570314
+Max accuracy for batch 350 = 1.0 at d = 1.1983925406187783
+Max accuracy for batch 400 = 1.0 at d = 1.1921601360291252
+Average accuracy across all batches=1.0 at d=1.1297927616997034
+Epoch 4, batch 0, loss=0.31574583053588867
+Epoch 4, batch 100, loss=0.264629065990448
+Epoch 4, batch 200, loss=0.2937919795513153
+Epoch 4, batch 300, loss=0.21260327100753784
+Epoch 4, batch 400, loss=0.25958770513534546
+Average epoch loss=0.24372685480333076
+Max accuracy for batch 0 = 1.0 at d = 0.8413426415622242
+Max accuracy for batch 50 = 1.0 at d = 1.0449671808481216
+Max accuracy for batch 100 = 1.0 at d = 0.6307969632372266
+Max accuracy for batch 150 = 1.0 at d = 1.0600618019886314
+Max accuracy for batch 200 = 1.0 at d = 0.6848127280529589
+Max accuracy for batch 250 = 1.0 at d = 0.47612673376500647
+Max accuracy for batch 300 = 1.0 at d = 0.9254227479696281
+Max accuracy for batch 350 = 1.0 at d = 0.6910204765759409
+Max accuracy for batch 400 = 1.0 at d = 0.671105467729271
+Average accuracy across all batches=1.0 at d=0.8188108546386729
+Epoch 5, batch 0, loss=0.22911711037158966
+Epoch 5, batch 100, loss=0.24331235885620117
+Epoch 5, batch 200, loss=0.37927740812301636
+Epoch 5, batch 300, loss=0.379227876663208
+Epoch 5, batch 400, loss=0.2552136778831482
+Average epoch loss=0.29669166758286497
+Max accuracy for batch 0 = 1.0 at d = 1.3845750064849867
+Max accuracy for batch 50 = 1.0 at d = 1.6811652361750618
+Max accuracy for batch 100 = 1.0 at d = 1.2511668904125701
+Max accuracy for batch 150 = 1.0 at d = 1.440453649520875
+Max accuracy for batch 200 = 1.0 at d = 1.520049253150822
+Max accuracy for batch 250 = 1.0 at d = 1.165692380577327
+Max accuracy for batch 300 = 1.0 at d = 1.6741309156715884
+Max accuracy for batch 350 = 1.0 at d = 1.411879535391928
+Max accuracy for batch 400 = 1.0 at d = 1.5997077926397338
+Average accuracy across all batches=1.0 at d=1.4838585426244646
+Epoch 6, batch 0, loss=0.31405025720596313
+Epoch 6, batch 100, loss=0.15729734301567078
+Epoch 6, batch 200, loss=0.2176973819732666
+Epoch 6, batch 300, loss=0.3014603853225708
+Epoch 6, batch 400, loss=0.3036958575248718
+Average epoch loss=0.2504293214252248
+Max accuracy for batch 0 = 1.0 at d = 1.0462595559209595
+Max accuracy for batch 50 = 1.0 at d = 1.3727047126665723
+Max accuracy for batch 100 = 1.0 at d = 1.102871689327062
+Max accuracy for batch 150 = 1.0 at d = 1.3088038588017237
+Max accuracy for batch 200 = 1.0 at d = 1.3702847950458539
+Max accuracy for batch 250 = 1.0 at d = 0.817074641883374
+Max accuracy for batch 300 = 1.0 at d = 1.1673678048551093
+Max accuracy for batch 350 = 1.0 at d = 1.309244170177729
+Max accuracy for batch 400 = 1.0 at d = 1.1143044302240024
+Average accuracy across all batches=1.0 at d=1.1111846197941515
+Epoch 7, batch 0, loss=0.17747321724891663
+Epoch 7, batch 100, loss=0.24132341146469116
+Epoch 7, batch 200, loss=0.2239411175251007
+Epoch 7, batch 300, loss=0.23987233638763428
+Epoch 7, batch 400, loss=0.20807740092277527
+Average epoch loss=0.23823422625761806
+Max accuracy for batch 0 = 1.0 at d = 1.0509244563579567
+Max accuracy for batch 50 = 1.0 at d = 1.3737573313713085
+Max accuracy for batch 100 = 1.0 at d = 0.7455814848486334
+Max accuracy for batch 150 = 1.0 at d = 1.39017814987898
+Max accuracy for batch 200 = 1.0 at d = 1.0359642605781563
+Max accuracy for batch 250 = 1.0 at d = 0.8243357006311424
+Max accuracy for batch 300 = 1.0 at d = 1.0875954414010058
+Max accuracy for batch 350 = 1.0 at d = 0.9764776027798661
+Max accuracy for batch 400 = 1.0 at d = 0.9910929605364808
+Average accuracy across all batches=1.0 at d=1.0193495244249022
+Epoch 8, batch 0, loss=0.19402113556861877
+Epoch 8, batch 100, loss=0.21650783717632294
+Epoch 8, batch 200, loss=0.24036021530628204
+Epoch 8, batch 300, loss=0.20245563983917236
+Epoch 8, batch 400, loss=0.19443310797214508
+Average epoch loss=0.22952205413620305
+Max accuracy for batch 0 = 1.0 at d = 1.1073893332481393
+Max accuracy for batch 50 = 1.0 at d = 1.741081369593741
+Max accuracy for batch 100 = 1.0 at d = 0.8294356497228152
+Max accuracy for batch 150 = 1.0 at d = 1.2724292356967937
+Max accuracy for batch 200 = 1.0 at d = 1.3147124964296828
+Max accuracy for batch 250 = 1.0 at d = 0.8344161501787604
+Max accuracy for batch 300 = 1.0 at d = 1.267088004410268
+Max accuracy for batch 350 = 1.0 at d = 1.129923740684987
+Max accuracy for batch 400 = 1.0 at d = 0.9085715192258366
+Average accuracy across all batches=1.0 at d=1.0900617143036297
+Epoch 9, batch 0, loss=0.18937809765338898
+Epoch 9, batch 100, loss=0.22383429110050201
+Epoch 9, batch 200, loss=0.20430830121040344
+Epoch 9, batch 300, loss=0.2374766618013382
+Epoch 9, batch 400, loss=0.18467693030834198
+Average epoch loss=0.2245444096036205
+Max accuracy for batch 0 = 1.0 at d = 1.2775974620580683
+Max accuracy for batch 50 = 1.0 at d = 1.5560208508074296
+Max accuracy for batch 100 = 1.0 at d = 0.9544348180890091
+Max accuracy for batch 150 = 1.0 at d = 1.3487433723062288
+Max accuracy for batch 200 = 1.0 at d = 1.146006889581681
+Max accuracy for batch 250 = 1.0 at d = 0.9689370265901097
+Max accuracy for batch 300 = 1.0 at d = 1.1732248449921618
+Max accuracy for batch 350 = 1.0 at d = 1.3302057988643656
+Max accuracy for batch 400 = 1.0 at d = 0.8731207502782352
+Average accuracy across all batches=1.0 at d=1.1846355885394517
+Epoch 10, batch 0, loss=0.18402335047721863
+Epoch 10, batch 100, loss=0.23739683628082275
+Epoch 10, batch 200, loss=0.20549336075782776
+Epoch 10, batch 300, loss=0.2519204616546631
+Epoch 10, batch 400, loss=0.21917155385017395
+Average epoch loss=0.21404897435053208
+Max accuracy for batch 0 = 1.0 at d = 0.5841648434698586
+Max accuracy for batch 50 = 1.0 at d = 0.5374710684269671
+Max accuracy for batch 100 = 1.0 at d = 0.3919327307865027
+Max accuracy for batch 150 = 1.0 at d = 0.5436389624923472
+Max accuracy for batch 200 = 1.0 at d = 0.5483492369800806
+Max accuracy for batch 250 = 1.0 at d = 0.43461706507206
+Max accuracy for batch 300 = 1.0 at d = 0.7094086333215243
+Max accuracy for batch 350 = 1.0 at d = 0.6638586357459432
+Max accuracy for batch 400 = 1.0 at d = 0.400809618330095
+Average accuracy across all batches=1.0 at d=0.5140997849181078

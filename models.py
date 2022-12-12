@@ -105,7 +105,7 @@ class ContrastiveLoss(nn.Module):
 class BCEWithLogitsLoss(nn.Module):
 
     def __init__(self, margin=0):
-        super(L2_CrossEntropyLoss, self).__init__()
+        super(BCEWithLogitsLoss, self).__init__()
         self.loss = nn.BCEWithLogitsLoss()
         self.shift = 1
         self.margin = margin
