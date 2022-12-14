@@ -1,0 +1,31 @@
+Namespace(batch_size=64, clip=False, disjoint_user=True, epochs=15, fs=False, loss='contrastive', lr=0.001, model_name='resnet', weight_decay=0.0001)
+Average epoch loss=0.2571707908693399
+accuracy across all batches=1.0 at d=0.6643081049323087
+Average epoch loss=0.011613922801942707
+accuracy across all batches=1.0 at d=0.37512101927399666
+Average epoch loss=0.002468837310139484
+accuracy across all batches=1.0 at d=0.19807227139174954
+Average epoch loss=0.0009177732564559257
+accuracy across all batches=1.0 at d=0.3965523246824745
+Average epoch loss=0.0460463920359076
+accuracy across all batches=1.0 at d=0.5945186378657823
+Average epoch loss=0.003200926244791664
+accuracy across all batches=1.0 at d=0.3912155953049663
+Average epoch loss=0.0016114408319956532
+accuracy across all batches=1.0 at d=0.21702952083945293
+Average epoch loss=0.0036175290324781846
+accuracy across all batches=1.0 at d=0.1395572965219618
+Average epoch loss=0.0003955346247485969
+accuracy across all batches=1.0 at d=0.46573578928783577
+Average epoch loss=0.07311165777133971
+accuracy across all batches=0.9999298245614034 at d=0.6955368357449776
+Average epoch loss=0.0024296503998721985
+accuracy across all batches=1.0 at d=0.575415352690965
+Average epoch loss=0.00045354688175778775
+accuracy across all batches=1.0 at d=0.2068684161156416
+Average epoch loss=0.00024236973865651986
+accuracy across all batches=1.0 at d=0.19709864734299481
+Average epoch loss=0.00018566218976637765
+accuracy across all batches=1.0 at d=0.14935372956842197
+Average epoch loss=0.001542517611105231
+accuracy across all batches=1.0 at d=0.08506320905312896

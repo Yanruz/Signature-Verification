@@ -14,7 +14,7 @@ module purge
 singularity exec --nv \
     --overlay /scratch/ds5749/NLQ/overlay-15GB-500K.ext3:ro /scratch/work/public/singularity/cuda11.2.2-cudnn8-devel-ubuntu20.04.sif /bin/bash -c \
     "source /ext3/miniconda3/etc/profile.d/conda.sh; conda activate vslnet; 
-    python siamese_train.py  --model_name vit --epochs 15 --batch_size 32"
+    python siamese_train.py  --model_name resnet_pretrained --epochs 15 --batch_size 64"
 
     # SiameseConvNet, TransformerNet, vit_base
-# python siamese_train.py --model_name TransformerNet --epochs 1  --loss BCE --batch_size 32 --fs True
+# python siamese_train.py --model_name resnet_pretrained --epochs 1  --loss BCE --batch_size 32 --fs True

@@ -3,6 +3,26 @@ from transformers import ViTFeatureExtractor, ViTForImageClassification
 import torch.nn as nn 
 import torch.nn.functional as F
 import torch
+from torchvision.models import resnet18, resnet50
+
+class resnet_18(nn.Module):
+    def __init__(self, weights=False):
+        super(resnet_18, self).__init__()
+        self.model = resnet18(weights)
+        self.model.fc = nn.Linear(512, 128)
+    def forward(self, input1, input2):
+        output1, output2 = self.model(input1), self.model(input2)
+        return output1, output2
+
+class resnet_50(nn.Module):
+    def __init__(self, weights=False):
+        super(resnet_50, self).__init__()
+        self.model = resnet50()
+        self.model.fc = nn.Linear(2048, 512)
+    def forward(self, input1, input2):
+        output1, output2 = self.model(input1), self.model(input2)
+        return output1, output2
+
 class vit_base(nn.Module):
     def __init__(self):
         super(vit_base, self).__init__()

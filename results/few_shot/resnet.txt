@@ -1,0 +1,7 @@
+Namespace(batch_size=32, clip=False, disjoint_user=True, epochs=1, fs=True, loss='BCE', lr=0.001, model_name='resnet', weight_decay=0.0001)
+Average epoch loss=0.0014398184102491116
+accuracy across all batches=0.6830670343329572 at d=2.457363879203798
+
+Namespace(batch_size=32, clip=False, disjoint_user=True, epochs=1, fs=True, loss='contrastive', lr=0.001, model_name='resnet', weight_decay=0.0001)
+Average epoch loss=0.0033525263482776235
+accuracy across all batches=0.661643647668084 at d=1.5092881217002876

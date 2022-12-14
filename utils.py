@@ -106,6 +106,14 @@ def get_model(model_name):
         return TransformerNet()
     elif 'vit' in model_name:
         return vit_base()
+    elif 'resnet50_pretrained' == model_name:
+        return resnet_50(True)
+    elif 'resnet50' == model_name:
+        return resnet50(False)
+    elif 'resnet' == model_name:
+        return resnet_18(False)
+    elif 'resnet_pretrained' == model_name:
+        return resnet_18(True)
 
 def get_transform(model_name):
     num_output_channels = 1
@@ -114,6 +122,9 @@ def get_transform(model_name):
     elif model_name == 'TransformerNet':
         image_size = (224, 224)
     elif 'vit' in model_name:
+        image_size = (224, 224)
+        num_output_channels = 3
+    elif 'resnet' in model_name:
         image_size = (224, 224)
         num_output_channels = 3
 
