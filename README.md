@@ -4,5 +4,9 @@ To train a siamese network run:
 '''
 python siamese_train.py --model_name SiameseConvNet
 '''
-
---model_name has options: SiameseConvNet, TransformerNet
+Parameters:
+--model_name : SiameseConvNet, TransformerNet， resnet, resnet_pretrained, vit_pretrained
+--loss : BCE, contrastive
+--batch_size
+--lr
+--weight_decay
