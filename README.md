@@ -1,8 +1,18 @@
 # Signature-Verification
 
-To train a siamese network run:
-'''
-python siamese_train.py --model_name SiameseConvNet
-'''
+### Requirements
+* Python 3.8 (or newer)
+* PyTorch install 1.11.0 (older versions may work too)
+* torchvision
+* Other dependencies: transformer, numpy
 
---model_name has options: SiameseConvNet, TransformerNet
+
+### Model Training
+To train a siamese network run:
+```
+python siamese_train.py  \
+  --model_name SiameseConvNet --loss BCE
+```
+Parameters:
+--model_name: SiameseConvNet, TransformerNet， resnet, resnet_pretrained, vit_pretrained
+--loss: BCE, contrastive
