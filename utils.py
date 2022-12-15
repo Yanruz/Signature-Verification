@@ -128,13 +128,16 @@ def get_transform(model_name):
         image_size = (224, 224)
         num_output_channels = 3
 
-    transform =  transforms.Compose([transforms.Resize(image_size),
+    transform =  transforms.Compose([
+                    transforms.ToPILImage(),
+                    transforms.Resize(image_size),
                     # transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
                     transforms.Grayscale(num_output_channels=num_output_channels),
-                    transforms.ToTensor()])
+                    transforms.ToTensor()
+                    ])
                     # transforms.GaussianBlur(kernel_size=(5, 9), sigma=(0.1, 5))
                     # transforms.RandomRotation(degrees=(0, 90))
-    return transform
+    return transform, image_size
 
 def train(epochs, train_loader, model, optimizer, criterion, test_loader, clip=False, few_shot=False):
     for epoch in range(1, epochs+1):

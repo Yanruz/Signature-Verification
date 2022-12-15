@@ -47,7 +47,7 @@ def main(args):
         dataset_gen(args.disjoint_user)
 
     # Train Dataset
-    transform = get_transform(args.model_name)
+    transform, image_size = get_transform(args.model_name)
     train_dataset = GetDataset("train", transform=transform, disjoint_user=args.disjoint_user)
     train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True)
         

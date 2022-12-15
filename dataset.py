@@ -1,7 +1,9 @@
 import pickle
 from torch.utils.data import Dataset
 from PIL import Image
-
+from PIL.ImageOps import invert
+import numpy as np
+import torch
 class GetDataset(Dataset):
 
     def __init__(self, dataset, transform = None, disjoint_user=False):
@@ -21,14 +23,30 @@ class GetDataset(Dataset):
 
     def __getitem__(self, index):
         item = self.pairs[index]
-
-        X = Image.open(item[0])
-        Y = Image.open(item[1])
-
+        X = Image.open(item[0]).convert('L')
+        Y = Image.open(item[1]).convert('L')
+        X = np.array(invert(X))
+        Y = np.array(invert(Y))
+        X[X>=50]=255
+        X[X<50]=0
+        Y[Y>=50]=255
+        Y[Y<50]=0
         if self.transform is not None:
             X = self.transform(X)
             Y = self.transform(Y)
 
+        # X = np.array(invert(X))
+        # Y = np.array(invert(Y))
+        # X[X>=50]=255
+        # X[X<50]=0
+        # Y[Y>=50]=255
+        # Y[Y<50]=0
+        # X = np.expand_dims(X,axis =0)
+        # Y = np.expand_dims(Y,axis =0)
+
+        # X = torch.from_numpy(X)
+        # Y = torch.from_numpy(Y)
+        
         return [X, Y, item[2]]
 
     def __len__(self):
